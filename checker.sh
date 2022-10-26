@@ -1,9 +1,9 @@
 #!/bin/bash
 #This script is used to check the headers , and their categories
-#Gabriel ROdriguez Kellan Anderson
+#Gabriel Rodriguez Kellan Anderson
 # EXIT LEGEND
 # exit 0 - successful
-# exit 1 - misssing header
+# exit 1 - missing header
 # exit 2 - instate , but NC is not the state
 # exit 3 - number of items and categories does not match
 
@@ -13,6 +13,7 @@ file=$2
 
 #list of headers cut from the first line in the file
 header=$(cut -d ":" -f 1 $file)
+
 #removing blank lines from inputfile and storing result in temp.txt
 grep . $file > temp.txt
 
@@ -20,6 +21,10 @@ customer=$(awk 'NR==1' temp.txt) #first line of inputfile
 address=$(awk 'NR==2' temp.txt) #second line of inputfile
 categories=$(awk 'NR==3' temp.txt) #third line of inputfile
 items=$(awk 'NR==4' temp.txt) #last line of inputfile
+
+#removte temp file because its not used anymore
+rm temp.txt
+
 
 headerArray=($header) #array created from header
 
@@ -60,6 +65,7 @@ if [ ${headerArray[1]} == "address" ]; then
                                         exit 2
                                 fi
                 fi
+
 else
         echo Error: Missing Header Line
         echo Last Header line $customer
@@ -95,4 +101,3 @@ else
 fi
 
 )
-rm temp.txt

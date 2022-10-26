@@ -19,11 +19,20 @@ if [ $# -eq 1 ]; then
                         #checking for correct file extension
                         if [[ $file = *.iso ]];then
                                 echo correct extension
+                                #calling checker.sh to make sure headers are correct
+                                bash checker.sh -i $file
+                                if [ $? -eq 0 ]; then
+                                        echo successful
+                                        exit 0
+                                fi
 
                         elif [[ $file = *.oso ]]; then
                                 echo correct extension
-                                #write separate script to check headings,items and itemcounts.
-
+                                bash checker.sh -o $file
+                                if [ $? -eq 0 ]; then
+                                        echo successful
+                                        exit 0
+                                fi
 
                         else
                                 echo Error: "${file##*.}" is not a valid extension
