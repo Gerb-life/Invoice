@@ -44,7 +44,7 @@ read street_num street_name_1 street_name_2 street_id
 
 # look to see if the the street has more than one name, if not then reassign the
 # street identifier
-if [[ $street_id == "" ]]; then street_id=$street_name_2; fi 
+if [[ $street_id == "" ]]; then street_id=$street_name_2; street_name_2=""; fi 
 
 # Make sure the street number is a number
 test_street_num=`echo $street_num | grep -o -e "[0-9]*"`
@@ -63,9 +63,9 @@ address=`echo "$street_num $street_name_1 $street_name_2 $street_id"`
 echo -n "Please enter city > "
 read city
 
-# Test to make sure there are no numbers in the city name
+# Test to make sure the city name is not an empty string and there are not numbers in it
 test_city=`echo $city | grep -o -e "[0-9]*"`
-if [[ $test_city != "" ]]; then echo "Invlid city name"; exit $STATUS_INVALID_ARG; fi
+if [[ $test_city != "" ]] || [[ $city == "" ]]; then echo "Invlid city name"; exit $STATUS_INVALID_ARG; fi
 
 
 #################################### State ####################################
@@ -84,8 +84,38 @@ else
     if [[ $test_state != 3 ]]; then echo "Invalid state"; exit $STATUS_INVALID_ARG; fi
 fi
 
+############################## Read Categories ################################
+
+# Get the order fields
+echo -n "Please enter the number of fields that compromise the order > "
+read fields
+
+# String to to concatenate the output string
+purchased=""
+
+# Loop through the fields
+for field in $fields; do
+
+    echo -n "Please enter the number of \"$field\" items you want to purchace > "
+    read num
+
+    # Check to make sure the number of items purchaced is a number
+    test_num=`echo $num | grep -o -e "[0-9]*"`
+    if [[ $num == "" ]]; then echo "Invalid argument given, must be a number"; exit $STATUS_INVALID_ARG; fi
+    
+    purchased=`echo -n "$purchased$num "`
+
+done
+
+########## Formatting ################
+
+# Remove the trailing comma and format the items purchased
+purchased=`echo $purchased | awk -F" " 'BEGIN{OFS=",";} {$1=$1; print $0;}'`
+
+cats=`echo $fields | awk -F" " 'BEGIN{OFS=",";} {$1=$1; print $0;}'`
+
 ################################## Testing ####################################
-echo "Name: $name"
-echo "Address: $address"
-echo "City: $city"
-echo "State: $state" 
+echo "customer:$name"
+echo "address:$address, $city, $state"
+echo "categories:$cats"
+echo "Items:$purchased"
