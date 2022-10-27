@@ -114,6 +114,31 @@ purchased=`echo $purchased | awk -F" " 'BEGIN{OFS=",";} {$1=$1; print $0;}'`
 
 cats=`echo $fields | awk -F" " 'BEGIN{OFS=",";} {$1=$1; print $0;}'`
 
+############## Call Valid.sh ########################
+ext=""
+if [[ $2 == "-i" ]] ; then
+    ext=".iso"
+else
+    ext=".oso"
+fi
+
+ext=`echo "shoping.$ext"`
+
+echo "customer: $name" >> $ext
+echo "address: $address, $city, $state" >> $ext
+echo "categories: $cats" >> $ext
+echo "items: $purchased" >> $ext 
+
+echo "Calling valid with $ext"
+bash valid.sh $ext
+if [[ $? != 0 ]] ; then
+    rm $ext
+    exit 1
+fi
+
+echo "\"$ext\" has been created for "
+head -n2 $ext
+
 ################################## Testing ####################################
 echo "customer:$name"
 echo "address:$address, $city, $state"
