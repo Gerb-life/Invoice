@@ -22,7 +22,7 @@ address=$(awk 'NR==2' temp.txt) #second line of inputfile
 categories=$(awk 'NR==3' temp.txt) #third line of inputfile
 items=$(awk 'NR==4' temp.txt) #last line of inputfile
 
-#removte temp file because its not used anymore
+#remove temp file because its not used anymore
 rm temp.txt
 
 
@@ -42,62 +42,63 @@ categoryArray=($categoriesLine)
 read itemLine <<<$items
 itemArray=($itemLine)
 
-##################################### Customer ####################################
-
-if [ ${headerArray[0]} == "customer" ]; then
-        #continue
-        echo customer
-else
-        echo Error: Missings Header Line
-        exit 1
+################################ Customer ####################################
+#checking to see if first header is customer
+if [ ${headerArray[0]} != "customer" ]; then
+    echo Error: Missings Header Line
+    exit 1
 fi
 
-##################################### Address ####################################
+################################# Address ####################################
+#checking to see if second header is address
 if [ ${headerArray[1]} == "address" ]; then
-                #check to see if instate or out of state
-                if [ $inOutState = "-i" ];then
-                                #check to see if state is NC
-                                if [[ ${addressArray[2]} == *"NC"* ]]; then
-                                                #continue
-                                                echo instate
-                                else
-                                        echo Error: Invoice is instate , but state is not NC
-                                        exit 2
-                                fi
-                fi
+    #check to see if instate or out of state
+       if [ $inOutState = "-i" ];then
+
+            # if instate check if state is not NC
+            if [[ ${addressArray[2]} != *"NC"* ]]; then
+                echo Error: Invoice is instate , but state is not NC
+                exit 2
+            fi
+
+            # if out of state check if state is NC
+       elif [ $inOutState = "-o" ];then
+            if [[ ${addressArray[2]} == *"NC"* ]];then
+                echo Error: Invoice is out of state , but state is NC
+                exit 2
+            fi
+       fi
 
 else
-        echo Error: Missing Header Line
-        echo Last Header line $customer
-        exit 1
+    echo Error: Missing Header Line
+    echo Last Header line $customer
+    exit 1
 fi
-##################################### Customer ####################################
-if [ ${headerArray[2]} == "categories" ]; then
-                #continue
-                echo categories
-else
-        echo Error: Missing Header Line
-        echo Last Header Line $address
-        exit 1
+################################ Customer ####################################
+#checking to see if thrid header is categories
+if [ ${headerArray[2]} != "categories" ]; then
+    echo Error: Missing Header Line
+    echo Last Header Line $address
+    exit 1
 fi
 
-##################################### Items ####################################
-if [ ${headerArray[3]} == "items" ]; then
-                #continue
-                echo items
-else
-        echo Error: Missing header Line
-        echo Last header Line
-        exit 1
+################################# Items ######################################
+#checking to see if final header is items
+if [ ${headerArray[3]} != "items" ]; then
+    echo Error: Missing header Line
+    echo Last header Line
+    exit 1
 fi
 
 #Check to see if number of items matches number of categories
 if [ ${#categoryArray[@]} -eq ${#itemArray[@]} ];then
-                echo success
-                exit 0
+    #successful
+    exit 0
 else
-        echo Error invalid item quantities: ${#categoryArray[@]} Categories but ${#itemArray[@]} items
-        exit 3
+    catlen=${#categoryArray[@]}
+    itemlen=${#itemArray[@]}
+    echo Error invalid item quantities: $catlen Categories but $itemlen  items
+    exit 3
 fi
 
 )
