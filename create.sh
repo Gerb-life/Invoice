@@ -122,7 +122,7 @@ else
     ext=".oso"
 fi
 
-ext=`echo "shoping.$ext"`
+ext=`echo "$3$ext"`
 
 echo "customer: $name" >> $ext
 echo "address: $address, $city, $state" >> $ext
@@ -140,7 +140,7 @@ echo "\"$ext\" has been created for "
 head -n2 $ext
 
 ################################## Testing ####################################
-echo "customer:$name"
-echo "address:$address, $city, $state"
-echo "categories:$cats"
-echo "Items:$purchased"
+#echo "customer:$name"
+#echo "address:$address, $city, $state"
+#echo "categories:$cats"
+#echo "Items:$purchased"
