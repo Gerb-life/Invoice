@@ -20,8 +20,7 @@
 STATUS_BAD_USAGE=1
 STATUS_INVALID_ARG=2
 
-
-##################################### Name ####################################
+#################################### Name ####################################
 if [[ $# != 2 ]] ; then
     echo "usage: create.sh -i|-o filename"
     exit $STATUS_BAD_UASGE
@@ -116,13 +115,13 @@ cats=`echo $fields | awk -F" " 'BEGIN{OFS=",";} {$1=$1; print $0;}'`
 
 ############## Call Valid.sh ########################
 ext=""
-if [[ $2 == "-i" ]] ; then
+if [[ $1 == "-i" ]] ; then
     ext=".iso"
 else
     ext=".oso"
 fi
 
-ext=`echo "$3$ext"`
+ext=`echo "$2$ext"`
 
 echo "customer: $name" >> $ext
 echo "address: $address, $city, $state" >> $ext
