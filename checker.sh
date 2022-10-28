@@ -22,6 +22,7 @@ address=$(awk 'NR==2' temp.txt) #second line of inputfile
 categories=$(awk 'NR==3' temp.txt) #third line of inputfile
 items=$(awk 'NR==4' temp.txt) #last line of inputfile
 
+
 #remove temp file because its not used anymore
 rm temp.txt
 
@@ -46,6 +47,7 @@ itemArray=($itemLine)
 #checking to see if first header is customer
 if [ ${headerArray[0]} != "customer" ]; then
     echo Error: Missings Header Line
+    echo First header line should be "customer"
     exit 1
 fi
 
@@ -81,24 +83,22 @@ if [ ${headerArray[2]} != "categories" ]; then
     echo Last Header Line $address
     exit 1
 fi
-
 ################################# Items ######################################
 #checking to see if final header is items
-if [ ${headerArray[3]} != "items" ]; then
+if [ "${headerArray[3]}" != "items" ]; then
     echo Error: Missing header Line
-    echo Last header Line
+    echo Last header Line $categories
     exit 1
 fi
 
 #Check to see if number of items matches number of categories
-if [ ${#categoryArray[@]} -eq ${#itemArray[@]} ];then
-    #successful
-    exit 0
-else
-    catlen=${#categoryArray[@]}
-    itemlen=${#itemArray[@]}
-    echo Error invalid item quantities: $catlen Categories but $itemlen  items
-    exit 3
-fi
-
+    if [ ${#categoryArray[@]} -eq ${#itemArray[@]} ];then
+        #successful
+        exit 0
+    else
+        catlen=${#categoryArray[@]}
+        itemlen=${#itemArray[@]}
+        echo Error invalid item quantities: $catlen Categories but $itemlen  items
+        exit 3
+    fi
 )

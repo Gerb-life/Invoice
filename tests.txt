@@ -97,7 +97,7 @@ The number of items purchased is empty
     Please enter customer name > John Doe
     Please enter the street address > 1 University Way
     Please enter city > Cullowhee
-    Please enter the number of fields that compromise the order > apple oranges tomatoes
+ Please enter the number of fields that compromise the order > apple oranges tomatoes
     Please enter the number of "apple" items you want to purchace >
     Cannot have an empty field
 
@@ -123,7 +123,66 @@ Make sure that the program asks for a state if the -o flag is present
     Please enter the number of "oranges" items you want to purchace > 6
     Please enter the number of "tomatoes" items you want to purchace > 3
     Calling valid with shopping.oso
-    
+
     "shopping.oso" has been created for
     customer: John Doe
     address: 12 Somewhere Rd, Somewhereville, MT
+
+TESTING FOR VALID
+CORRECT RUN
+    ./valid.sh shopping.iso
+    Successful
+
+PRINT AN ERROR MESSAGE IF:
+
+Incorrect number of commmand line arguments
+    ./valid.sh
+    Usage valid.sh <filename>
+
+    ./valid.sh shop.iso i
+    Usage valid.sh <filename>
+
+Making sure file Exists
+    ./valid.sh shop.foom
+    Error: shop.foom is not accessable.
+
+Making sure file is readable
+    ./valid.sh shop.iso
+    Error: shop.iso is not accessable.
+
+Making sure file extension is valid
+    ./valid.sh invoice.ooo
+    Error: ooo is not a valid extension
+
+
+Making sure first header is customer
+    ./valid.sh missingCustomer.iso
+   Error: Missings Header Line
+   First header line should be customer
+
+Making sure Second header is address
+    ./valid.sh missingAddress.iso
+    Error: Missing Header Line
+    Last Header line customer: Gabriel Rodriguez
+
+Making sure third header is categories
+     ./valid.sh missingCategories.iso
+     Error: Missing Header Line
+     Last Header Line address: 1244 Fairview Rd  sylva  NC
+
+Making sure final header is items
+    ./valid.sh missingItems.iso
+    Error: Missing header Line
+    Last header Line categories: a b c d
+
+Making sure item count and category count are the same
+    ./valid.sh invoice.iso
+    Error invalid item quantities: 4 Categories but 3 items
+
+Making sure in state invoices have NC as state
+    ./valid.sh invoice.iso
+    Error: Invoice is instate , but state is not NC
+
+Making sure out of state invoices dont have NC as state
+    ./valid.sh invoice.oso
+    Error: Invoice is out of state , but state is NC	
