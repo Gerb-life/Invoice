@@ -1,3 +1,7 @@
+#!/bin/bash
+#This script is used to validate invoices by making sure they have the
+#correct permissions,correct extensions,correct headers and the correct,
+#number of items in each category
 #EXIT LEGEND
 #exit 0 - successful
 #exit 1 - invalid permissions
