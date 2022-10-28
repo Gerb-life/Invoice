@@ -1,0 +1,129 @@
+CORRECT RUN:
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city > Cullowhee
+    Please enter the number of fields that compromise the order > apples oranges tomatoes
+    Please enter the number of "apples" items you want to purchace > 12
+    Please enter the number of "oranges" items you want to purchace > 9
+    Please enter the number of "tomatoes" items you want to purchace > 2
+    Calling valid with shopping.iso
+
+    "shopping.iso" has been created for
+    customer: John Doe
+    address: 1 University Way, Cullowhee, NC
+
+PRINT AN ERROR MESSAGE IF:
+There is an invalid number of arguments:
+    ./create.sh
+    usage: create.sh -i|-o filename
+
+There are numbers in the customers name
+    ./create.sh -i shopping
+    Please enter customer name > 13John
+    Invalid name
+
+The name is empty
+    ./create.sh -i shopping
+    Please enter customer name >
+    Cannot have an empty field
+
+The address is empty
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address >
+    Cannot have an empty field
+
+The street number is not a number
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > ab University way
+    Invalid street number
+
+There are numbers in the street name
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 Universi1y way
+    Invalid street name
+
+The city is empty
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city >
+    Cannot have an empty field
+
+There are numbers in the city name
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city > Cu11owhee
+    Invalid city name
+
+The state is empty
+    ./create.sh -o shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 12 Somewhere Rd
+    Please enter city > Somewhereville
+    Please enter state >
+    Invalid state
+
+The state passed is not two letters
+    ./create.sh -o shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 12 Somewhere Rd
+    Please enter city > Somewhereville
+    Please enter state > CAT
+    Invalid state
+
+The state has numbers in it
+    ./create.sh -o shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 12 Somewhere Rd
+    Please enter city > Somewhereville
+    Please enter state > C1
+    Invalid state
+
+The items to purchase is empty
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city > Cullowhee
+    Please enter the number of fields that compromise the order >
+    Cannot have an empty field
+
+The number of items purchased is empty
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city > Cullowhee
+    Please enter the number of fields that compromise the order > apple oranges tomatoes
+    Please enter the number of "apple" items you want to purchace >
+    Cannot have an empty field
+
+The items purchased is not a number
+    ./create.sh -i shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 1 University Way
+    Please enter city > Cullowhee
+    Please enter the number of fields that compromise the order > apples oranges tomatoes
+    Please enter the number of "apples" items you want to purchace > 12
+    Please enter the number of "oranges" items you want to purchace > a
+    Invalid argument given, must be a number
+
+OTHER:
+Make sure that the program asks for a state if the -o flag is present
+    ./create.sh -o shopping
+    Please enter customer name > John Doe
+    Please enter the street address > 12 Somewhere Rd
+    Please enter city > Somewhereville
+    Please enter state > MT
+    Please enter the number of fields that compromise the order > apples oranges tomatoes
+    Please enter the number of "apples" items you want to purchace > 12
+    Please enter the number of "oranges" items you want to purchace > 6
+    Please enter the number of "tomatoes" items you want to purchace > 3
+    Calling valid with shopping.oso
+    
+    "shopping.oso" has been created for
+    customer: John Doe
+    address: 12 Somewhere Rd, Somewhereville, MT
