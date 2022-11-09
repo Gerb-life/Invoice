@@ -10,6 +10,7 @@
 ###############################################################################
 
 #Exit status legend
+
 STATUS_BAD_USAGE=1
 STATUS_INVALID_ARG=2
 STATUS_VALID_FAILED=3
@@ -17,7 +18,7 @@ STATUS_VALID_FAILED=3
 #################################### Name ####################################
 if [[ $# != 2 ]] ; then
     echo "usage: create.sh -i|-o filename"
-    exit $STATUS_BAD_UASGE
+    exit $STATUS_BAD_USAGE
 fi
 
 # Get the customer name
@@ -165,10 +166,10 @@ fi
 ext=`echo "$2$ext"`
 
 # Populate the file
-echo "customer: $name" > $ext
-echo "address: $address, $city, $state" >> $ext
-echo "categories: $cats" >> $ext
-echo "items: $purchased" >> $ext 
+echo "customer:$name" > $ext
+echo "address:$address, $city, $state" >> $ext
+echo "categories:$cats" >> $ext
+echo "items:$purchased" >> $ext 
 
 # Call valid.sh
 echo "Calling valid with $ext"
