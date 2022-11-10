@@ -19,6 +19,13 @@ STATUS_VALID_FAILED=3
 if [[ $# != 2 ]] ; then
     echo "usage: create.sh -i|-o filename"
     exit $STATUS_BAD_USAGE
+
+# Fix hanging issue
+else 
+    if [[ $1 != "-i" ]] || [[ $1 != "-o" ]]; then
+        echo "usage: create.sh -i|-o filename"
+        exit $STATUS_BAD_USAGE
+    fi
 fi
 
 # Get the customer name
